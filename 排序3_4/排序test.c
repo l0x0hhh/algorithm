@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 //冒泡排序
-void sortArr(int arr[],int size)//升序
+void sortArr_bubble(int arr[],int size)//升序
 {
 	for (int i = 0; i < size-1; i++)//size-1轮大循环
 	{
@@ -92,15 +92,7 @@ void quickSort(int arr[], int low, int high) {
 	}
 }
 
-//打印数组
-void printArr(int arr[],int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		printf("%d ", arr[i]);
-	}
-	printf("\n");
-}
+//初始化数组
 void inital_arr(int* arr, int sz)
 {
 	printf("请输入待排序的数字，请用空格分隔:\n");
@@ -109,6 +101,18 @@ void inital_arr(int* arr, int sz)
 		scanf("%d", &arr[i]);
 	}
 }
+
+//打印数组
+void printArr(int arr[],int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	printf("\n\n");
+}
+
+//菜单
 void meau()
 {
 	printf("------------排序-------------\n");
@@ -116,6 +120,7 @@ void meau()
 	printf("|---------  0.退出  ---------|\n");
 	printf("-----------------------------\n");
 }
+
 int main()
 {
 	int input = 0;
@@ -131,27 +136,35 @@ int main()
 			printf("欢迎下次使用\n");
 			break;
 		case 1:
-			printf("输入你想待排序数字的个数:>");
-			scanf("%d", &sz);
-			int* arr = (int*)malloc(sz * sizeof(int));
-			inital_arr(arr, sz);
-			printf("排序前的数组: \n");
-			printArr(arr, sz);
-			sortArr(arr, sz);
-			printf("排序后的数组: \n");
-			printArr(arr, sz);
-			break;
 		case 2:
 			printf("输入你想待排序数字的个数:>");
 			scanf("%d", &sz);
-			int* arr2 = (int*)malloc(sz * sizeof(int));
-			inital_arr(arr2, sz);
+			//输入验证
+			if (sz <= 0) {
+				printf("输入错误，请输入一个正整数\n\n");
+				break;
+			}
+
+			int* arr = (int*)malloc(sz * sizeof(int));
+			if (arr == NULL) {
+				printf("内存分配失败\n");
+				break;
+			}
+
+			inital_arr(arr, sz);
 			printf("排序前的数组: \n");
-			printArr(arr2, sz);
-			quickSort(arr2, 0, sz - 1);
+			printArr(arr, sz);
+			if (input == 1) {
+				sortArr_bubble(arr, sz);//使用冒泡
+			}
+			else {
+				quickSort(arr, 0, sz-1); // 使用快速排序
+			}
+
 			printf("排序后的数组: \n");
-			printArr(arr2, sz);
+			printArr(arr, sz);
 			break;
+
 		default:
 			printf("选择错误，重新输入\n");
 			break;
@@ -216,4 +229,50 @@ int main()
 //		quickSort(arr, low, pi - 1);  // 递归排序左部分
 //		quickSort(arr, pi + 1, high); // 递归排序右部分
 //	}
+//}
+
+//-------------------------------------------------------
+
+//int main()
+//{
+//	int input = 0;
+//	int sz = 0;
+//
+//	do {
+//		meau();
+//		printf("请选择功能:>");
+//		scanf("%d", &input);
+//		switch (input)
+//		{
+//		case 0:
+//			printf("欢迎下次使用\n");
+//			break;
+//		case 1:
+//			printf("输入你想待排序数字的个数:>");
+//			scanf("%d", &sz);
+//			int* arr = (int*)malloc(sz * sizeof(int));
+//			inital_arr(arr, sz);
+//			printf("排序前的数组: \n");
+//			printArr(arr, sz);
+//			sortArr(arr, sz);
+//			printf("排序后的数组: \n");
+//			printArr(arr, sz);
+//			break;
+//		case 2:
+//			printf("输入你想待排序数字的个数:>");
+//			scanf("%d", &sz);
+//			int* arr2 = (int*)malloc(sz * sizeof(int));
+//			inital_arr(arr2, sz);
+//			printf("排序前的数组: \n");
+//			printArr(arr2, sz);
+//			quickSort(arr2, 0, sz - 1);
+//			printf("排序后的数组: \n");
+//			printArr(arr2, sz);
+//			break;
+//		default:
+//			printf("选择错误，重新输入\n");
+//			break;
+//		}
+//	} while (input);
+//	return 0;
 //}
