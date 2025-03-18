@@ -1,6 +1,15 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
+
+//交换
+void swap(int* a, int* b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
 //冒泡排序
 void sortArr_bubble(int arr[],int size)//升序
 {
@@ -9,77 +18,32 @@ void sortArr_bubble(int arr[],int size)//升序
 		for (int j = 0; j < size-1-i; j++)
 		{
 			if (arr[j] > arr[j + 1]) {
-				int temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
+				swap(&arr[j], &arr[j + 1]);
 			}
 		}
 	}
 }
 
-//交换
-void swap(int* a, int* b)
-{
-	int temp=*a;
-	*a = *b;
-	*b = temp;
-}
-
-//// 分区函数
-//int partition(int arr[], int low, int high) {
-//	int pivot = arr[low];  // 选第一个元素为基准
-//	int left = low + 1;    // 左指针从基准下一个位置开始
-//	int right = high;      // 右指针从末尾开始
-//
-//	while (left <= right) {
-//		// 左指针找比基准大的元素
-//		while (left <= right && arr[left] <= pivot) left++;
-//		// 右指针找比基准小的元素
-//		while (left <= right && arr[right] > pivot) right--;
-//		// 交换左右指针的元素
-//		if (left < right) {
-//			swap(&arr[left], &arr[right]);
-//			left++;
-//			right--;
-//		}
-//	}
-//	// 将基准放到正确位置
-//	swap(&arr[low], &arr[right]);
-//	return right;  // 返回基准的最终位置
-//}
-
 // 分区函数
 int partition(int arr[], int low, int high) {
-	int randomIndex = low + rand() % (high - low + 1);
-	swap(&arr[low], &arr[randomIndex]);
-
 	int pivot = arr[low];  // 选第一个元素为基准
-	
-	int left = low;    // 左指针从基准下一个位置开始
+	int left = low + 1;    // 左指针从基准下一个位置开始
 	int right = high;      // 右指针从末尾开始
 
-	while (left != right) {
+	while (left <= right) {
+		// 左指针找比基准大的元素
+		while (left <= right && arr[left] <= pivot) left++;
 		// 右指针找比基准小的元素
-		while (left < right && arr[right] > pivot)
-		{
-			right--;
-		}
+		while (left <= right && arr[right] > pivot) right--;
 		// 交换左右指针的元素
 		if (left < right) {
 			swap(&arr[left], &arr[right]);
 			left++;
-		}
-
-		// 左指针找比基准大的元素
-		while (left < right && arr[left] <= pivot) left++;
-		// 交换左右指针的元素
-		if (left < right) {
-			swap(&arr[left], &arr[right]);
 			right--;
 		}
 	}
 	// 将基准放到正确位置
-	swap(&pivot, &arr[right]);
+	swap(&arr[low], &arr[right]);
 	return right;  // 返回基准的最终位置
 }
 
@@ -115,10 +79,10 @@ void printArr(int arr[],int size)
 //菜单
 void meau()
 {
-	printf("------------排序-------------\n");
+	printf("------------排序--------------\n");
 	printf("|---- 1.冒泡      2.快排 ----|\n");
 	printf("|---------  0.退出  ---------|\n");
-	printf("-----------------------------\n");
+	printf("------------------------------\n");
 }
 
 int main()
@@ -147,13 +111,14 @@ int main()
 
 			int* arr = (int*)malloc(sz * sizeof(int));
 			if (arr == NULL) {
-				printf("内存分配失败\n");
-				break;
+				perror("内存分配失败");
+				return 1;
 			}
 
 			inital_arr(arr, sz);
 			printf("排序前的数组: \n");
 			printArr(arr, sz);
+
 			if (input == 1) {
 				sortArr_bubble(arr, sz);//使用冒泡
 			}
@@ -163,8 +128,8 @@ int main()
 
 			printf("排序后的数组: \n");
 			printArr(arr, sz);
+			free(arr);
 			break;
-
 		default:
 			printf("选择错误，重新输入\n");
 			break;
@@ -229,6 +194,42 @@ int main()
 //		quickSort(arr, low, pi - 1);  // 递归排序左部分
 //		quickSort(arr, pi + 1, high); // 递归排序右部分
 //	}
+//}
+
+////自己写的
+//// 分区函数
+//int partition(int arr[], int low, int high) {
+//	int randomIndex = low + rand() % (high - low + 1);
+//	swap(&arr[low], &arr[randomIndex]);
+//
+//	int pivot = arr[low];  // 选第一个元素为基准
+//	
+//	int left = low;    // 左指针从基准下一个位置开始
+//	int right = high;      // 右指针从末尾开始
+//
+//	while (left != right) {
+//		// 右指针找比基准小的元素
+//		while (left < right && arr[right] > pivot)
+//		{
+//			right--;
+//		}
+//		// 交换左右指针的元素
+//		if (left < right) {
+//			swap(&arr[left], &arr[right]);
+//			left++;
+//		}
+//
+//		// 左指针找比基准大的元素
+//		while (left < right && arr[left] <= pivot) left++;
+//		// 交换左右指针的元素
+//		if (left < right) {
+//			swap(&arr[left], &arr[right]);
+//			right--;
+//		}
+//	}
+//	// 将基准放到正确位置
+//	swap(&pivot, &arr[right]);
+//	return right;  // 返回基准的最终位置
 //}
 
 //-------------------------------------------------------
