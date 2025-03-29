@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
 //交换
 void swap(int* a, int* b)
@@ -120,10 +121,16 @@ int main()
 			printArr(arr, sz);
 
 			if (input == 1) {
+				int start = clock();
 				sortArr_bubble(arr, sz);//使用冒泡
+				int end = clock();
+				printf("冒泡排序时间：%dms\n", end - start);
 			}
 			else {
+				int start = clock();
 				quickSort(arr, 0, sz-1); // 使用快速排序
+				int end = clock();
+				printf("快速排序时间：%dms\n", end - start);
 			}
 
 			printf("排序后的数组: \n");
