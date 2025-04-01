@@ -84,6 +84,20 @@ int findnum(Datetype* arr, Datetype wantnum,int left, int right, int* found)
 
 }
 
+int Del(int* nums,int size)//删除重复元素
+{
+	int i = 0;
+	for (int j = 1; j < size; j++)//快指针
+	{
+		if (nums[j] != nums[i])
+		{
+			i++;
+			nums[i] = nums[j];
+		}
+	}
+	return i + 1;//数量
+}
+
 //打印
 void printarr(Datetype* arr, int size)
 {
@@ -117,15 +131,19 @@ int main()
 	printf("排序后:>\n");
 	printarr(arr, num);
 
+	printf("删除重复元素后:>\n");
+	int size=Del(arr, num);
+	printarr(arr, size);
+
 	Datetype numwant = 0;
 	printf("请输入你想查找的值,我来告诉下标（从0开始）:>");
 	scanf("%d", &numwant);
 
 	int found = 0;
 	//int pos = findnum(arr, numwant, num,&found);
-	int pos = findnum(arr, numwant, 0, num - 1, &found);//递归
+	int pos = findnum(arr, numwant, 0, size-1, &found);//递归
 	if (found) {
-		printf("该数 %d 在数组中的小标为 %d\n", numwant, pos);
+		printf("该数 %d 在数组中的下标为 %d\n", numwant, pos);
 	}
 	else
 	{
