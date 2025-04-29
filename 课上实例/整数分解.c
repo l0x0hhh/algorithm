@@ -41,6 +41,7 @@ void integerPartition(int n) {
     free(result);
 }
 
+
 void primeFactorization(int n)//质因数分解 
 {
     printf("%d = ", n);
