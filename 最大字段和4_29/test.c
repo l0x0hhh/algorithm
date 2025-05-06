@@ -16,16 +16,21 @@
 //void printnum(int*arr,int* dp, int end)
 //{
 //	int begin = -1;
-//	for (int i = end - 1; i >= 0; i--)
+//	int flag = 1;
+//	for (int i = end; i >= 0; i--)
 //	{
-//		if (dp[i] > 0)
+//		if (dp[i] > 0)//没有等于是为了确保字段为最小
 //		{
 //			begin = i;
+//			flag = 0;
 //		}
 //		else
 //		{
 //			break;
 //		}
+//	}
+//	if (flag) {
+//		begin = end;
 //	}
 //	printf("对应子段 arr[%d..%d]：", begin, end);
 //	for (int i = begin; i <= end; i++)
@@ -39,7 +44,7 @@
 //int* createmaxnum(int* arr, int size)
 //{
 //	//dp[i]维护的是以i为结尾的最大字段和
-//	int* dp = (int*)malloc(size * sizeof(int*));
+//	int* dp = (int*)malloc(size * sizeof(int));
 //	if (dp == NULL)
 //	{
 //		perror("malloc");
